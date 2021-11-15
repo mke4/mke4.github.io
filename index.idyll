@@ -1,0 +1,57 @@
+[meta title:"Mke4 HW10" description:"Lake Huron Water Level by Color" /]
+
+[Header
+  fullWidth:true
+  title:"Mke4 HW10"
+  subtitle:"Lake Huron Water Level by Color"
+  author:"Maddie Evangelisti"
+  authorLink:"https://idyll-lang.org"
+  date:`(new Date()).toDateString()`
+  background:"#222222"
+  color:"#ffffff"
+   /]
+
+
+## Introduction to the Data
+
+I first downloaded the `LakeHuron.csv`file as we have seen in class to my idyll data folder. I am using this data to create a visualization of the water level in Lake Huron over time. This interactive visualization allows you to view the relationship alone, or to view the water level changes by a redpurple color scheme by clicking the `Water Level` button. It is generated via
+the file `index.idyll`. [Dataset Source](https://raw.githubusercontent.com/UIUC-iSchool-DataViz/is445_spring2021/master/week10/data/LakeHuron.csv)
+
+## Loading the Data
+
+Below, there is a table of the columns and values within this dataset. As you can see, there are two columns depicting the water level for that specific year.
+
+[data name:"huron" source:"LakeHuron.csv" /]
+
+[Table data:huron /]
+
+## Visualization
+
+With this dataset, I created a VegaLite line plot to show the relationship of the water level in Lake Huron over the years of 1875 to 1972. I also used the built in idyll button function to create two unique buttons. If you click the `Water Level` button, you are able to see the change in water level by color. If you click the `None` button, you can revert back to the original VegaLite plot. I find it interesting how the water level does not have a definite linear trend. I think it would be valuable if there were additional columns on rainfall and heat index in these years to understand how the water level is affected in this way.
+ [Color Scheme Source](https://vega.github.io/vega/docs/schemes/)
+
+[var name:"colorBy" value:`{}` /] 
+
+[IdyllVegaLite data:huron spec:`{
+  width: 500,
+  height: 400,
+  mark: "line",
+  encoding: {
+    x: {
+      field: "time",
+      type: "temporal",
+      axis: {title: "State", format:"%Y"}
+    },
+    y: {
+      field: "value",
+      type: "quantitative",
+      axis: {title: "Income"},
+      scale: {domain: [575, 585] }
+    },
+    color:colorBy
+  }
+}` /]
+
+Color by:
+ [button onClick:`colorBy = {}` ]None[/button]
+ [button onClick:`colorBy = {field: 'value', type: 'quantitative', scale:{"scheme":"redpurple"}}` ]Water Level[/button]
