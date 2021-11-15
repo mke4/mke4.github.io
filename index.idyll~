@@ -1,0 +1,49 @@
+[meta title:"My Idyll Post" description:"Short description of your project" /]
+
+[Header
+  fullWidth:true
+  title:"My Idyll Post"
+  subtitle:"Welcome to Idyll. Open index.idyll to start writing"
+  author:"Your Name Here"
+  authorLink:"https://idyll-lang.org"
+  date:`(new Date()).toDateString()`
+  background:"#222222"
+  color:"#ffffff"
+   /]
+
+
+## Introduction to the Data
+
+This is an Idyll post. It is generated via
+the file `index.idyll`. To compile this post using
+idyll, run the command `idyll` inside of this directory.
+
+
+Idyll posts are designed to support interaction and
+data-driven graphics.
+
+
+Configuration can be done via the `idyll` field in `package.json`.
+
+## Loading the Data
+
+[data name:"roadaccidents" source:"road.csv" /]
+
+[Table data:roadaccidents /]
+
+## Visualization
+
+[Chart type:"bar" data:`roadaccidents` domain:`null` range:`null` x:"deaths" y:"deaths" /]
+
+
+[IdyllVegaLite data:roadaccidents spec:`{
+  width: 400,
+  height: 200,
+  mark: "bar",
+  encoding: {
+    x: {aggregate: "mean", field: "popden", axis:{title:"Deaths", format:"%Y"}},
+    y: {aggregate: "mean", field: "deaths"}
+  }
+}` /]
+
+
